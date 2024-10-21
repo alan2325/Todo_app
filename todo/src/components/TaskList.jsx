@@ -21,7 +21,7 @@ const TaskList=()=> {
     
     const updateTask = (id, updateTask) =>{
         setEditing(false);
-        axios.put('http://localhost:8000/api/task/${id}/', updateTask)
+        axios.put(`http://localhost:8000/api/task/${id}/`, updateTask)
             .then(response => {
                 setTasks(tasks.map(task => (task.id === id ? response.data : task)));
             })
