@@ -7,12 +7,18 @@ const TaskList=()=> {
     const [currentTask, setCurrentTask]= useState({ id: null, title:'', description:''});
 
     useEffect(()=>{
-        axios.get('https://aswanth74.pythonanywhere.com/api/tasks/')
+        axios.get(`https://aswanth74.pythonanywhere.com/api/tasks/`)
         .then(Response=>setTasks(Response.data))
         .catch(error=>console.log(error));
     },[]);
 
-    const DeleteTask = (id) =>{};
+    const DeleteTask = (id) =>{
+        axios.delete(`https://aswanth74.pythonanywhere.com/api/tasks/${id}`)
+            .then(response => {
+                setTasks(tasks.filter(task => task.id !== id));
+            })
+            .catch(error => console.log(error));
+    };
 
     const editTask = (task) =>{
         setEditing(true);
@@ -37,7 +43,7 @@ const TaskList=()=> {
                         <td>{task.id}</td>
                         <td>{task.title}</td>
                         <td><button className='bt btn-warning px-3' onClick={()=>editTask(task)}>Edit</button></td>
-                        <td><button className='bt btn-danger' onClick={()=>DeleteTask(task)}>Delete</button></td>
+                        <td><button className='bt btn-danger' onClick={()=>DeleteTask(task.id)}>Delete</button></td>
                     </tr>   
                 ))}
             </table>
